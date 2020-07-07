@@ -44,7 +44,7 @@ bot.get_updates(fail_silently: true) do |message|
       "только тяжелые наркотики!"
     when /релиз/i
       "все хуйня давай по новой"
-    when "/start"
+    when "/start", /(^| )бот($| )/i
       "@#{message.from.username} сам ты бот, пидор"
     end
 
