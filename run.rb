@@ -41,7 +41,7 @@ bot.get_updates(fail_silently: true) do |message|
     when /просто мне кажется/i
       "@#{message.from.username} ты наверное не понял"
     when "/start"
-      "@#{message.from.username} сам ты бот"
+      "@#{message.from.username} сам ты бот, пидор"
     end
 
     if response != nil
