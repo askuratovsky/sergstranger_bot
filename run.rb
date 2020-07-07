@@ -46,7 +46,7 @@ bot.get_updates(fail_silently: true) do |message|
 
     if response != nil
       reply.text = response
-      logger.debug "sending #{reply.text.inspect} to @#{message.from.username}"
+      logger.debug "sending #{response} to @#{message.from.username}"
       reply.send_with(bot)
     end
   end
