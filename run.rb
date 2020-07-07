@@ -3,7 +3,7 @@ Bundler.require(:default)
 require 'logger'
 TOKEN = ENV['TOKEN']
 raise "no TOKEN specified" if TOKEN.nil?
-logger = Logger.new(STDOUT)
+logger = Logger.new('bot.log')
 
 logger.info "starting bot"
 bot = TelegramBot.new(token: TOKEN)
