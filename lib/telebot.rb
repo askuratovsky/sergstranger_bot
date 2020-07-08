@@ -1,3 +1,5 @@
+require 'net/http'
+require 'json'
 class Telebot
   attr_reader :logger
 
@@ -18,9 +20,14 @@ class Telebot
             response = replies.sample
             response.gsub!('%username%', "@#{message.from.username}")
             logger.info "#{message.chat.id} | response | sending \"#{response}\" to @#{message.from.username}"
-            bot.api.sendMessage(chat_id: message.chat.id, text: response)
+            bot.api.sendMessage chat_id: message.chat.id, text: response
             break
           end
+        end
+        if command =~ /(^| )(кот(ик|ов|иков|ики|а|ы)?|кошка)($| )/
+          logger.debug "cats command execute"
+          photo_url = JSON.parse(Net::HTTP.get('api.thecatapi.com', '/v1/images/search')).first["url"]
+          bot.api.sendPhoto chat_id: message.chat.id, photo: photo_url, caption: "вот тебе котик"
         end
       end
     end
