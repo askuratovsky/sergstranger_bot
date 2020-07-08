@@ -24,7 +24,7 @@ class Telebot
             break
           end
         end
-        if command =~ /(^| )(кот(ик|ов|иков|ики|а|ы)?|кошка)($| )/
+        if command =~ /(^|\s)(кот(ик|ов|иков|ики|ика|а|ы)?|кошка)($| )/
           logger.debug "cats command execute"
           photo_url = JSON.parse(Net::HTTP.get('api.thecatapi.com', '/v1/images/search')).first["url"]
           bot.api.sendPhoto chat_id: message.chat.id, photo: photo_url, caption: "вот тебе котик"
