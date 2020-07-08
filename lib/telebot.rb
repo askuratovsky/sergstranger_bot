@@ -10,6 +10,7 @@ class Telebot
     logger.debug "starting bot..."
     Telegram::Bot::Client.run(@token) do |bot|
       bot.listen do |message|
+        logger.debug "#{message.chat.id} | @#{message.from.username}: #{message.text}"
         command = message.text
         response = case command
         when /я сделал/i
@@ -47,7 +48,7 @@ class Telebot
         end
 
         if response != nil
-          logger.debug "sending \"#{response}\" to @#{message.from.username}"
+          logger.info "sending \"#{response}\" to @#{message.from.username} chat: #{message.chat.id}"
           bot.api.sendMessage(chat_id: message.chat.id, text: response)
         end
       end
