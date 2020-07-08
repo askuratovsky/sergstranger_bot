@@ -1,3 +1,5 @@
 .ruby-*
 .token
 *.log
+config.yaml
+pids
