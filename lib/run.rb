@@ -6,6 +6,10 @@ config = YAML::load_file File.join(__dir__, '../config/config.yaml')
 token = config["token"]
 raise "no TOKEN specified" if token.nil?
 logger = Logger.new(STDOUT, Logger::DEBUG)
+logger.datetime_format = '%Y-%m-%d %H:%M:%S'
+logger.formatter = proc do |severity, datetime, progname, msg|
+  "#{datetime} #{severity}: #{msg}\n"
+end
 
 begin
   bot = Telebot.new(token, logger)
