@@ -3,6 +3,7 @@ require 'yaml'
 require_relative 'telebot'
 
 config = YAML::load_file File.join(__dir__, '../config/config.yaml')
+replies = YAML::load_file File.join(__dir__, '../config/replies.yaml')
 token = config["token"]
 raise "no TOKEN specified" if token.nil?
 logger = Logger.new(STDOUT, Logger::DEBUG)
@@ -12,7 +13,7 @@ logger.formatter = proc do |severity, datetime, progname, msg|
 end
 
 begin
-  bot = Telebot.new(token, logger)
+  bot = Telebot.new(token, logger, replies)
   bot.start
 rescue => exception
   logger.error exception.message + "\n\t" + exception.backtrace.first(20).join("\n\t")
