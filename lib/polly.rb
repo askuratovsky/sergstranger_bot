@@ -2,11 +2,14 @@ class Polly
 
   def initialize phrase
     @phrase = phrase
+    @client = Aws::Polly::Client.new(
+      region: 'eu-west-1'
+    )
   end
 
   def generate
-    polly = Aws::Polly::Client.new
-    resp = polly.synthesize_speech({
+
+    resp = @client.synthesize_speech({
       output_format: "mp3",
       text: @phrase,
       voice_id: "Maxim",
