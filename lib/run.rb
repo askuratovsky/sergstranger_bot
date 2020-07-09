@@ -13,7 +13,7 @@ logger.formatter = proc do |severity, datetime, progname, msg|
 end
 
 begin
-  bot = Telebot.new(token, logger, replies)
+  bot = Telebot.new(config, logger, replies)
   bot.start
 rescue => exception
   logger.error exception.message + "\n\t" + exception.backtrace.first(20).join("\n\t")

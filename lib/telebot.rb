@@ -5,8 +5,9 @@ require_relative 'polly'
 class Telebot
   attr_reader :logger
 
-  def initialize token, logger, replies
-    @token = token
+  def initialize config, logger, replies
+    @config = config
+    @token = config["token"]
     @logger = logger
     @replies = replies
   end
@@ -31,11 +32,11 @@ class Telebot
           photo_url = JSON.parse(Net::HTTP.get('api.thecatapi.com', '/v1/images/search')).first["url"]
           bot.api.sendPhoto chat_id: message.chat.id, photo: photo_url, caption: "держи кота"
         end
-        if command =~ /(сер.га,?)?\s*скажи им/i
-          phrase = command.scan(/скажи им[:\s+]?\s*(.*)/).flatten.first
-          voice = Polly.new(phrase).generate
-          bot.api.sendVoice chat_id: message.chat.id, voice: voice
-        end
+        # if command =~ /(сер.га,?)?\s*скажи им/i
+        #   phrase = command.scan(/скажи им[:\s+]?\s*(.*)/).flatten.first
+        #   voice = Polly.new(@config, phrase).generate
+        #   bot.api.sendAudio chat_id: message.chat.id, audio: voice
+        # end
       end
     end
   end
