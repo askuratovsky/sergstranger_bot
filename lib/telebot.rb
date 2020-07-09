@@ -1,5 +1,7 @@
 require 'net/http'
 require 'json'
+require_relative 'polly'
+
 class Telebot
   attr_reader :logger
 
@@ -28,6 +30,11 @@ class Telebot
           logger.debug "cats command execute"
           photo_url = JSON.parse(Net::HTTP.get('api.thecatapi.com', '/v1/images/search')).first["url"]
           bot.api.sendPhoto chat_id: message.chat.id, photo: photo_url, caption: "держи кота"
+        end
+        if command =~ /(сер.га,?)?\s*скажи им/i
+          phrase = command.scan(/скажи им[:\s+]?\s*(.*)/).flatten.first
+          voice = Polly.new(phrase).generate
+          bot.api.sendVoice chat_id: message.chat.id, voice: voice
         end
       end
     end

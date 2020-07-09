@@ -3,3 +3,4 @@
 *.log
 config.yaml
 pids
+/tmp
