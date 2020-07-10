@@ -16,7 +16,7 @@ class Polly
       text: @phrase,
       voice_id: "Maxim"
     })
-    filename = "#{SecureRandom.hex}.mp3"
+    filename = "#{SecureRandom.hex(4)}.mp3"
     filepath = File.join(__dir__, "../tmp/public_uploads/#{filename}")
     old_files = Dir.glob("#{__dir__}/../tmp/public_uploads/*.mp3")
     FileUtils.rm_rf old_files unless old_files.empty?
