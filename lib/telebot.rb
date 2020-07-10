@@ -34,8 +34,9 @@ class Telebot
         end
         if command =~ /(сер.га,?)?\s*скажи ублюдкам/i
           phrase = command.scan(/скажи ублюдкам[:\s+]?\s*(.*)/).flatten.first
+
           filename = Polly.new(@config, phrase).generate
-          bot.api.sendVoice chat_id: message.chat.id, voice: "https://monoti.ru/public_uploads/#{filename}"
+          bot.api.sendAudio chat_id: message.chat.id, audio: "https://monoti.ru/public_uploads/#{filename}"
         end
       end
     end
