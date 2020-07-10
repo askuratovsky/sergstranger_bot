@@ -20,8 +20,9 @@ class Telebot
         command = message.text
 
         chat_id = message.chat.id
-        chat_id = -411111792 if command =~ /(^|\s)вчад\s/
-        # chat_id = -277090382 if command =~ /(^|\s)вчад\s/
+
+        chat_id = -411111792 if command =~ /(^|\s)тестчат\s/
+        chat_id = -277090382 if command =~ /(^|\s)вчат\s/
 
         @replies.each do |regex, replies|
           if command =~ /#{regex}/i
