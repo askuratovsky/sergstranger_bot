@@ -23,12 +23,12 @@ class Polly
     IO.copy_stream(resp.audio_stream, filepath)
 
     Dir.chdir File.join(__dir__, "../tmp/public_uploads")
-    `avconv -i message.mp3 -f wav - | opusenc --bitrate 256 - message.opus`
-    return 'message.opus'
+    `avconv -i message.mp3 -f wav - | opusenc --bitrate 256 - message.ogg`
+    return 'message.ogg'
   end
 
   def clear_old_files
-    ["mp3", "opus"].each do |format|
+    ["mp3", "opus", "ogg"].each do |format|
       old_files = Dir.glob("#{__dir__}/../tmp/public_uploads/*.#{format}")
       FileUtils.rm_rf old_files unless old_files.empty?
     end
