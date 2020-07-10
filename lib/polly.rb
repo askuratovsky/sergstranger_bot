@@ -22,7 +22,7 @@ class Polly
     clear_old_files
     IO.copy_stream(resp.audio_stream, filepath)
 
-    Dir.chdir('../tmp/public_uploads')
+    Dir.chdir File.join(__dir__, "../tmp/public_uploads)"
     `avconv -i message.mp3 -f wav - | opusenc --bitrate 256 - message.opus`
     return 'message.opus'
   end
