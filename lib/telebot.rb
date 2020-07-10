@@ -18,6 +18,11 @@ class Telebot
       bot.listen do |message|
         logger.debug "#{message.chat.id} | message | @#{message.from.username}: #{message.text}"
         command = message.text
+
+        chat_id = message.chat.id
+        chat_id = -411111792 if command =~ /(^|\s)вчад\s/
+        # chat_id = -277090382 if command =~ /(^|\s)вчад\s/
+
         @replies.each do |regex, replies|
           if command =~ /#{regex}/i
             response = replies.sample
@@ -38,7 +43,7 @@ class Telebot
           filename = Polly.new(@config, phrase).generate
           path = "https://monoti.ru/public_uploads/#{filename}"
           logger.debug("send voice file: #{path}")
-          bot.api.sendVoice chat_id: message.chat.id, voice: path
+          bot.api.sendVoice chat_id: chat_id, voice: path
         end
       end
     end
