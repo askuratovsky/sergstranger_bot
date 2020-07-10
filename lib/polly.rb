@@ -14,8 +14,9 @@ class Polly
       text: @phrase,
       voice_id: "Maxim"
     })
-    filepath = File.join(__dir__, '../tmp/voice.mp3')
+    filename = 'message.mp3'
+    filepath = File.join(__dir__, "../tmp/public_uploads/#{filename}")
     IO.copy_stream(resp.audio_stream, filepath)
-    return filepath
+    return filename
   end
 end
