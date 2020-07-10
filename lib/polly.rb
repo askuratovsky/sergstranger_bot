@@ -1,4 +1,4 @@
-reuqire 'securerandom'
+require 'securerandom'
 require 'fileutils'
 class Polly
 
