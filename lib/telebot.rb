@@ -33,7 +33,7 @@ class Telebot
           bot.api.sendPhoto chat_id: message.chat.id, photo: photo_url, caption: "держи кота"
         end
         if command =~ /(сер.га,?)?\s*скажи ублюдкам/i
-          phrase = command.scan(/скажи им[:\s+]?\s*(.*)/).flatten.first
+          phrase = command.scan(/скажи ублюдкам[:\s+]?\s*(.*)/).flatten.first
           filename = Polly.new(@config, phrase).generate
           bot.api.sendVoice chat_id: message.chat.id, voice: "https://monoti.ru/public_uploads/#{filename}"
         end
