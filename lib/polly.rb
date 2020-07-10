@@ -16,15 +16,14 @@ class Polly
       text: @phrase,
       voice_id: "Maxim"
     })
-    # filename = "#{SecureRandom.hex(4)}.mp3"
-    filename = "message.mp3"
-    filepath = File.join(__dir__, "../tmp/public_uploads/#{filename}")
+    filepath = File.join(__dir__, "../tmp/public_uploads/message.mp3")
     clear_old_files
     IO.copy_stream(resp.audio_stream, filepath)
 
     Dir.chdir File.join(__dir__, "../tmp/public_uploads")
-    `avconv -i message.mp3 -f wav - | opusenc --bitrate 256 - message.ogg`
-    return 'message.ogg'
+    filename = "#{SecureRandom.hex(4)}.ogg"
+    `avconv -i message.mp3 -f wav - | opusenc --bitrate 256 - #{filename}`
+    return filename
   end
 
   def clear_old_files
