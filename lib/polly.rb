@@ -12,15 +12,22 @@ class Polly
 
   def generate
     resp = @client.synthesize_speech({
-      output_format: "mp3", # value set: [ogg_vorbis, json, mp3, pcm]
+      output_format: "ogg_vorbis", # value set: [ogg_vorbis, json, mp3, pcm]
       text: @phrase,
       voice_id: "Maxim"
     })
-    filename = "#{SecureRandom.hex(4)}.mp3"
+    # filename = "#{SecureRandom.hex(4)}.mp3"
+    filename = "voice.ogg"
     filepath = File.join(__dir__, "../tmp/public_uploads/#{filename}")
-    old_files = Dir.glob("#{__dir__}/../tmp/public_uploads/*.mp3")
-    FileUtils.rm_rf old_files unless old_files.empty?
+    clear_old_files
     IO.copy_stream(resp.audio_stream, filepath)
     return filename
+  end
+
+  def clear_old_files
+    ["mp3", "ogg"].each do |format|
+      old_files = Dir.glob("#{__dir__}/../tmp/public_uploads/*.#{format}")
+      FileUtils.rm_rf old_files unless old_files.empty?
+    end
   end
 end
