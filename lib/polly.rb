@@ -12,20 +12,23 @@ class Polly
 
   def generate
     resp = @client.synthesize_speech({
-      output_format: "ogg_vorbis", # value set: [ogg_vorbis, json, mp3, pcm]
+      output_format: "mp3", # value set: [ogg_vorbis, json, mp3, pcm]
       text: @phrase,
       voice_id: "Maxim"
     })
     # filename = "#{SecureRandom.hex(4)}.mp3"
-    filename = "voice.ogg"
+    filename = "message.mp3"
     filepath = File.join(__dir__, "../tmp/public_uploads/#{filename}")
     clear_old_files
     IO.copy_stream(resp.audio_stream, filepath)
-    return filename
+
+    Dir.chdir('../tmp/public_uploads')
+    `avconv -i message.mp3 -f wav - | opusenc --bitrate 256 - message.opus`
+    return 'message.opus'
   end
 
   def clear_old_files
-    ["mp3", "ogg"].each do |format|
+    ["mp3", "opus"].each do |format|
       old_files = Dir.glob("#{__dir__}/../tmp/public_uploads/*.#{format}")
       FileUtils.rm_rf old_files unless old_files.empty?
     end
