@@ -12,7 +12,7 @@ class Telebot
     @replies = replies
   end
 
-  def reply(message)
+  def reply(bot, message)
     logger.debug "#{message.chat&.id} | message | @#{message.from&.username}: #{message.text}"
     command = message.text
 
@@ -51,7 +51,7 @@ class Telebot
     logger.debug "starting bot..."
     Telegram::Bot::Client.run(@token) do |bot|
       bot.listen do |message|
-        reply(message)
+        reply(bot, message)
       end
     end
   end
